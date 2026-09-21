@@ -70,3 +70,14 @@ def test_consumer_receives_event():
     messages = consumer.consume()
 
     assert len(messages) == 1
+
+
+def test_pipeline_delivers_detected_anomalies():
+    data_file = Path(__file__).parents[1] / "data" / "service_data.json"
+
+    result = run_pipeline(data_file)
+
+    assert result["records_processed"] == 10
+    assert len(result["anomalies_detected"]) == 2
+    assert len(result["events_consumed"]) == 2
+    assert result["events_consumed"] == result["anomalies_detected"]
