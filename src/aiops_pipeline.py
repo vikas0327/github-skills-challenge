@@ -1,20 +1,16 @@
 import json
 from pathlib import Path
 
-try:
-    from .anomaly_detector import AnomalyDetector
-    from .event_consumer import EventConsumer
-    from .event_producer import EventProducer
-    from .event_topic import EventTopic
-except ImportError:
-    from anomaly_detector import AnomalyDetector
-    from event_consumer import EventConsumer
-    from event_producer import EventProducer
-    from event_topic import EventTopic
+from anomaly_detector import AnomalyDetector
+from event_consumer import EventConsumer
+from event_producer import EventProducer
+from event_topic import EventTopic
 
 
 def load_data(file_path):
-    with open(file_path, "r", encoding="utf-8") as file:
+    base_dir = Path(__file__).resolve().parent.parent
+    resolved_path = (base_dir / file_path).resolve() if not Path(file_path).is_absolute() else Path(file_path)
+    with open(resolved_path, "r", encoding="utf-8") as file:
         return json.load(file)
 
 
@@ -46,8 +42,7 @@ def run_pipeline(file_path):
 
 
 if __name__ == "__main__":
-    data_file = Path(__file__).resolve().parents[1] / "data" / "service_data.json"
-    result = run_pipeline(data_file)
+    result = run_pipeline("data/service_data.json")
 
     print("=" * 50)
     print("AIOps Pipeline Result")
