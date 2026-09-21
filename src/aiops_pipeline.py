@@ -1,15 +1,24 @@
 import json
 from pathlib import Path
 
-from anomaly_detector import AnomalyDetector
-from event_consumer import EventConsumer
-from event_producer import EventProducer
-from event_topic import EventTopic
+try:
+    from .anomaly_detector import AnomalyDetector
+    from .event_consumer import EventConsumer
+    from .event_producer import EventProducer
+    from .event_topic import EventTopic
+except ImportError:
+    from anomaly_detector import AnomalyDetector
+    from event_consumer import EventConsumer
+    from event_producer import EventProducer
+    from event_topic import EventTopic
 
 
 def load_data(file_path):
     base_dir = Path(__file__).resolve().parent.parent
-    resolved_path = (base_dir / file_path).resolve() if not Path(file_path).is_absolute() else Path(file_path)
+    resolved_path = (
+        base_dir / file_path
+    ).resolve() if not Path(file_path).is_absolute() else Path(file_path)
+
     with open(resolved_path, "r", encoding="utf-8") as file:
         return json.load(file)
 
@@ -17,11 +26,11 @@ def load_data(file_path):
 def run_pipeline(file_path):
     data = load_data(file_path)
 
-    anamoly_topic = EventTopic("service-events")
+    producer_topic = EventTopic("service-events")
 
     detector = AnomalyDetector()
-    producer = EventProducer(anamoly_topic)
-    consumer = EventConsumer(anamoly_topic)
+    producer = EventProducer(producer_topic)
+    consumer = EventConsumer(producer_topic)
 
     detected_events = []
 
