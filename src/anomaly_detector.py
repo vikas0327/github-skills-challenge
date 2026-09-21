@@ -24,7 +24,7 @@ class AnomalyDetector:
             reasons.append("High memory utilization")
 
         if record["log_level"] in("ERROR", "WARNING"):
-            reasons.append("Error log detected")
+                    reasons.append("Error log detected")
 
         if record["message"].lower().find("timeout") != -1:
             reasons.append("Timeout error detected")
