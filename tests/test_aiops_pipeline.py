@@ -2,7 +2,7 @@ import os
 import sys
 from pathlib import Path
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from src.anomaly_detector import AnomalyDetector
 from src.aiops_pipeline import run_pipeline
@@ -74,7 +74,6 @@ def test_consumer_receives_event():
     messages = consumer.consume()
 
     assert len(messages) == 1
-
 
 def test_pipeline_delivers_detected_anomalies():
     data_file = Path(__file__).parents[1] / "data" / "service_data.json"
