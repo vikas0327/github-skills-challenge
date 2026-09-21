@@ -17,11 +17,11 @@ def load_data(file_path):
 def run_pipeline(file_path):
     data = load_data(file_path)
 
-    producer_topic = EventTopic("service-events")
+    anamoly_topic = EventTopic("service-events")
 
     detector = AnomalyDetector()
-    producer = EventProducer(producer_topic)
-    consumer = EventConsumer(producer_topic)
+    producer = EventProducer(anamoly_topic)
+    consumer = EventConsumer(anamoly_topic)
 
     detected_events = []
 
