@@ -79,7 +79,7 @@ def test_get_nth_fibonacci_ten():
     assert result == 55
 
 def test_get_nth_fibonacci_negative():
-    
+    """Test with a negative n."""
     # Arrange
     n = -1
 
